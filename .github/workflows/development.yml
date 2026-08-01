@@ -98,8 +98,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: org.angelauramc.amethyst-ios-trollstore
-          path: artifacts/org.angelauramc.amethyst-*-ios-trollstore.tipa
+          name: com.thenullastris.zenithlauncher-ios-trollstore
+          path: artifacts/com.thenullastris.zenithlauncher-*-ios-trollstore.tipa
           retention-days: 30
           if-no-files-found: warn
           compression-level: 0
@@ -108,8 +108,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: org.angelauramc.amethyst-ios-trollstore-slimmed
-          path: artifacts/org.angelauramc.amethyst.slimmed-*-ios-trollstore.tipa
+          name: com.thenullastris.zenithlauncher-ios-trollstore-slimmed
+          path: artifacts/com.thenullastris.zenithlauncher.slimmed-*-ios-trollstore.tipa
           retention-days: 30
           if-no-files-found: warn
           compression-level: 0
@@ -118,8 +118,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: org.angelauramc.amethyst-ios
-          path: artifacts/org.angelauramc.amethyst-*-ios.ipa
+          name: com.thenullastris.zenithlauncher-ios
+          path: artifacts/com.thenullastris.zenithlauncher-*-ios.ipa
           retention-days: 30
           if-no-files-found: warn
           compression-level: 0
@@ -128,8 +128,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: org.angelauramc.amethyst-ios-slimmed
-          path: artifacts/org.angelauramc.amethyst.slimmed-*-ios.ipa
+          name: com.thenullastris.zenithlauncher-ios-slimmed
+          path: artifacts/com.thenullastris.zenithlauncher.slimmed-*-ios.ipa
           retention-days: 30
           if-no-files-found: warn
           compression-level: 0

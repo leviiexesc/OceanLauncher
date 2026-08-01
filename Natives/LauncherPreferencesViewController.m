@@ -575,10 +575,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 0) { // Add to general section
-        return [NSString stringWithFormat:@"Angel Aura Amethyst %@-%s (%s/%s)\n%@ on %@ (%s)\nPID: %d",
+        return [NSString stringWithFormat:@"Zenith Launcher %@-%s\niOS %@ on %@",
             NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"],
-            CONFIG_TYPE, CONFIG_BRANCH, CONFIG_COMMIT,
-            UIDevice.currentDevice.completeOSVersion, [HostManager GetModelName], getenv("POJAV_DETECTEDINST"), getpid()];
+            CONFIG_TYPE,
+            UIDevice.currentDevice.completeOSVersion, [HostManager GetModelName]];
     }
 
     NSString *footer = NSLocalizedStringWithDefaultValue(([NSString stringWithFormat:@"preference.section.footer.%@", self.prefSections[section]]), @"Localizable", NSBundle.mainBundle, @" ", nil);

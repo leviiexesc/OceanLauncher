@@ -74,7 +74,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>org.angelauramc.amethyst</string>
+	<string>com.thenullastris.zenithlauncher</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -89,7 +89,7 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>org.angelauramc.amethyst.urlscheme</string>
+			<string>com.thenullastris.zenithlauncher.urlscheme</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>amethyst</string>

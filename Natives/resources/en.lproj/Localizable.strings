@@ -112,8 +112,8 @@
 "login.warn.title.demomode" = "Your account is Demo";
 "login.warn.message.demomode" = "As a replacement to offline and local mode, demo mode will allow you to sign into a Microsoft account that does not own the game and play the Java Edition trial, introduced in 1.3.1 and newer versions. Older versions contain the full game, as the official launcher does not place these restrictions. See our website to learn more about this transition from offline mode.";
 
-"login.warn.title.localmode" = "Offline mode is now Local mode.";
-"login.warn.message.localmode" = "You can continue to play installed versions, but you can no longer download Minecraft without a paid account. No support will be provided for issues with local accounts, or other means of acquiring Minecraft.";
+"login.warn.title.localmode" = "Local Account";
+"login.warn.message.localmode" = "Local accounts are fully supported. However, we recommend purchasing Minecraft in the future to support the developers.";
 
 "login.msa.error.xsts.noxboxacc" = "An Xbox profile is not registered for this Microsoft account. Please make sure that you have made an Xbox profile.\nError code: 2148916233";
 "login.msa.error.xsts.noxbox" = "Xbox Live is currently unavailable in your country.\nError code: 2148916235";

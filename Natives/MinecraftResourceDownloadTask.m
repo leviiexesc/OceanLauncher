@@ -312,10 +312,13 @@
     [self finishDownloadWithErrorString:errorStr];
 }
 
-// Check if the account has permission to download
+// check if the account have permission to download
 - (BOOL)checkAccessWithDialog:(BOOL)show {
+    // Enable permission for local account
     return YES;
 }
+
+
 
 // Check SHA of the file
 - (BOOL)checkSHAIgnorePref:(NSString *)sha forFile:(NSString *)path altName:(NSString *)altName logSuccess:(BOOL)logSuccess {
