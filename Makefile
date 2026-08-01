@@ -160,13 +160,12 @@ METHOD_JAVA_UNPACK = \
 	cd $(SOURCEDIR)/depends; \
 	if [ ! -f "java-$(1)-openjdk/release" ] && [ ! -f "$(ls jre$(1)-*.tar.xz)" ]; then \
 		if [ "$(RUNNER)" != "1" ]; then \
-			wget '$(2)' -q --show-progress; \
-			unzip jre*-ios-aarch64.zip && rm jre*-ios-aarch64.zip; \
+			wget '$(2)' -q --show-progress -O jre$(1)-ios-aarch64.zip; \
+			unzip jre$(1)-ios-aarch64.zip && rm jre$(1)-ios-aarch64.zip; \
 		fi; \
 		mkdir -p java-$(1)-openjdk; \
 		tar xvf jre$(1)-*.tar.xz -C java-$(1)-openjdk; \
 	fi
-
 # Function to codesign binaries.
 METHOD_CODESIGN = \
 	codesign --remove-signature $(2); \
