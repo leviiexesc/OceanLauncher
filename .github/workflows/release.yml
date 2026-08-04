@@ -11,12 +11,6 @@ jobs:
         include:
           - platform: 2
             platform_name: ios
-          - platform: 3
-            platform_name: tvos
-          - platform: 7
-            platform_name: iossimulator
-          - platform: 8
-            platform_name: tvossimulator
     
     runs-on: macos-14
     timeout-minutes: 60
@@ -81,17 +75,9 @@ jobs:
           export CXXFLAGS="-Wno-error=implicit-function-declaration $CXXFLAGS"
           SIGN_FLAGS="CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="
           
-          if [ "${{ matrix.platform_name }}" == "ios" ]; then
-            # Build ipa and tipa for iOS
-            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
-            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
-          elif [ "${{ matrix.platform_name }}" == "tvos" ]; then
-            # Build tipa only for tvOS
-            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
-          else
-            # Build ipa only for everything else
-            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
-          fi
+          # Build ipa and tipa for iOS
+          gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
+          gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
 
       - name: List artifacts
         if: always()
