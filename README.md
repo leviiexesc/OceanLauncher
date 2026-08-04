@@ -1,32 +1,89 @@
-**All versions of iOS (14 and later), now work, including every version of iOS 26 and iOS 27 beta, with proper TXM logic!**
+<div align="center">
+<img src="Natives/Assets.xcassets/AppLogo-Vector.imageset/1024x1024-Transparent.png" alt="Zenith-Launcher Logo" width="200"/>
+  <h1>Zenith-Launcher</h1>
+  <p><strong>A Minecraft: Java Edition Launcher for iOS based on PojavLauncher</strong></p>
+</div>
 
-**Mojang is moving the windowing and keyboard system from GLFW to SDL3, and I need help in order to make Amethyst use this. If anyone is able to assist, there is a post about it in Issues like always.**
+---
 
-**All the new versions of Minecraft work as of right now, however the newest snapshots don't. This is because of SDL3, which I am working on. The keyboard is fixed! It is currently recommended to use Zinc renderer (Mesa 25 via MoltenVK) for best performance, or LTW renderer if you are playing 1.21.1 and below. If you want to use Vulkan, launch the game with MobileGlues or Zinc and change your Preferred Graphics Api to Vulkan.**
+## 📱 Overview
 
-This is a build of AngelAuraAmethyst iOS which has been customized to be able to launch Minecraft 26.x.x. This includes the snapshots. Do note that this is completely unofficial. Don't bother the Amethyst devs if something breaks. Instead, post an issue here and i'll look into it. Huge shoutout to @Ynnyny and @DuyAnh662 once again for helping with code and rendering stuff under the hood. Keyboard is now working thanks to @T1k-T1k and @DuyAnh662. @T1k-T1k also made compiling possible. Huge thanks to both of them. This build bundles a custom lwjgl version and Java 25. It also does not include slimmed versions. Builds are only published in Releases and not in Actions. Builds in Actions are never intended to be used until they become releases. Most older Minecraft versions that use Java 21 will launch with this by selecting Java 25 as the Java version. All versions that use Java 8 work without any special configuration. Versions that use Java 17 do not currently work. Instead, you can install normal Amethyst alongside this version because of different bundle identifiers.
+Zenith-Launcher is a custom build of AngelAuraAmethyst iOS, specifically tailored to launch Minecraft 26.x.x, including the latest snapshots. It brings the full Minecraft: Java Edition experience to iOS devices (iOS 14 and later), featuring proper TXM logic and compatibility with iOS 26 and iOS 27 beta.
 
-Compiling does work, and is supported, but is still not recommended. The build process now automatically uses the custom lwjgl.jar from the project root. The lwjgl.jar at the root is a modified version of lwjgl 3.3.3 that provides compatibility with lwjgl 3.4.1 API calls.
+> **Note:** This project is completely unofficial. Please do not bother the Amethyst developers if something breaks. Instead, post an issue in this repository, and we will look into it.
 
-Thanks to vibecodest for their source code!
-## Third party components and their licenses
-- [Caciocavallo](https://github.com/PojavLauncherTeam/caciocavallo): [GNU GPLv2 License](https://github.com/PojavLauncherTeam/caciocavallo/blob/master/LICENSE).
-- [jsr305](https://code.google.com/p/jsr-305): [3-Clause BSD License](http://opensource.org/licenses/BSD-3-Clause).
-- [Boardwalk](https://github.com/zhuowei/Boardwalk): [Apache 2.0 License](https://github.com/zhuowei/Boardwalk/blob/master/LICENSE) 
-- [GL4ES](https://github.com/ptitSeb/gl4es) by @lunixbochs @ptitSeb: [MIT License](https://github.com/ptitSeb/gl4es/blob/master/LICENSE).
-- [Mesa 3D Graphics Library](https://gitlab.freedesktop.org/mesa/mesa): [MIT License](https://docs.mesa3d.org/license.html).
-- [MetalANGLE](https://github.com/khanhduytran0/metalangle) by @kakashidinho and ANGLE team: [BSD 2.0 License](https://github.com/kakashidinho/metalangle/blob/master/LICENSE).
-- [MoltenVK](https://github.com/KhronosGroup/MoltenVK): [Apache 2.0 License](https://github.com/KhronosGroup/MoltenVK/blob/master/LICENSE).
-- [openal-soft](https://github.com/kcat/openal-soft): [LGPLv2 License](https://github.com/kcat/openal-soft/blob/master/COPYING).
-- [Azul Zulu JDK](https://www.azul.com/downloads/?package=jdk): [GNU GPLv2 License](https://openjdk.java.net/legal/gplv2+ce.html).
-- [LWJGL3](https://github.com/PojavLauncherTeam/lwjgl3): [BSD-3 License](https://github.com/LWJGL/lwjgl3/blob/master/LICENSE.md).
-- [LWJGLX](https://github.com/PojavLauncherTeam/lwjglx) (LWJGL2 API compatibility layer for LWJGL3): unknown license.
-- [DBNumberedSlider](https://github.com/khanhduytran0/DBNumberedSlider): [Apache 2.0 License](https://github.com/immago/DBNumberedSlider/blob/master/LICENSE)
-- [fishhook](https://github.com/khanhduytran0/fishhook): [BSD-3 License](https://github.com/facebook/fishhook/blob/main/LICENSE).
-- [shaderc](https://github.com/khanhduytran0/shaderc) (used by Vulkan rendering mods): [Apache 2.0 License](https://github.com/google/shaderc/blob/main/LICENSE).
-- [NRFileManager](https://github.com/mozilla-mobile/firefox-ios/tree/b2f89ac40835c5988a1a3eb642982544e00f0f90/ThirdParty/NRFileManager): [MPL-2.0 License](https://www.mozilla.org/en-US/MPL/2.0)
-- [AltKit](https://github.com/rileytestut/AltKit)
-- [UnzipKit](https://github.com/abbeycode/UnzipKit): [BSD-2 License](https://github.com/abbeycode/UnzipKit/blob/master/LICENSE).
-- [DyldDeNeuralyzer](https://github.com/xpn/DyldDeNeuralyzer): bypasses Library Validation for loading external runtime
-- [LTW render](https://github.com/MojoLauncher/LTW.git): [LGPL-3.0 license](https://github.com/MojoLauncher/LTW/blob/master/LICENSE)
-- Thanks to [MCHeads](https://mc-heads.net) for providing Minecraft avatars.
+## ✨ Key Features
+
+- **Broad iOS Support:** Compatible with all versions of iOS 14 and later, including iOS 26 and iOS 27 beta.
+
+- **Latest Minecraft Versions:** Supports launching Minecraft 26.x.x and snapshots.
+
+- **Custom Java & LWJGL:** Bundles a custom `lwjgl` version and Java 25 for optimal compatibility.
+
+- **Keyboard Support:** Fully functional keyboard integration.
+
+- **Renderer Options:**
+  - **Zinc Renderer (Mesa 25 via MoltenVK):** Recommended for best performance.
+  - **LTW Renderer:** Recommended for playing version 1.21.1 and below.
+  - **Vulkan:** Launch with MobileGlues or Zinc and change your Preferred Graphics API to Vulkan.
+
+## 🚀 Current Status & Known Issues
+
+- **SDL3 Transition:** Mojang is moving the windowing and keyboard system from GLFW to SDL3. Assistance is needed to make Amethyst use this. If you can help, please check the Issues tab.
+
+- **Newest Snapshots:** Currently unsupported due to the SDL3 transition (work in progress).
+
+- **Java Compatibility:**
+  - **Java 8:** Works without any special configuration.
+  - **Java 21:** Most older versions will launch by selecting Java 25 as the Java version.
+  - **Java 17:** Currently unsupported. You can install normal Amethyst alongside this version due to different bundle identifiers.
+
+## 🛠️ Compiling
+
+Compiling is supported but **not recommended** for general users.
+
+The build process automatically uses the custom `lwjgl.jar` located at the project root. This `lwjgl.jar` is a modified version of LWJGL 3.3.3 that provides compatibility with LWJGL 3.4.1 API calls.
+
+## 🙏 Acknowledgements
+
+- **vibecodest:** For their source code.
+
+- **@Ynnyny & @DuyAnh662:** For helping with code and rendering under the hood.
+
+- **@T1k-T1k & @DuyAnh662:** For fixing the keyboard.
+
+- **@T1k-T1k:** For making compiling possible.
+
+- **MCHeads:** For providing Minecraft avatars.
+
+## 📜 Third-Party Components & Licenses
+
+This project utilizes several third-party components. Below is a list of these components and their respective licenses:
+
+| Component | License |
+| --- | --- |
+| **Caciocavallo** | GNU GPLv2 |
+| **jsr305** | 3-Clause BSD |
+| **Boardwalk** | Apache 2.0 |
+| **GL4ES** (@lunixbochs, @ptitSeb) | MIT |
+| **Mesa 3D Graphics Library** | MIT |
+| **MetalANGLE** (@kakashidinho & ANGLE team) | BSD 2.0 |
+| **MoltenVK** | Apache 2.0 |
+| **openal-soft** | LGPLv2 |
+| **Azul Zulu JDK** | GNU GPLv2 |
+| **LWJGL3** | BSD-3 |
+| **LWJGLX** | Unknown |
+| **DBNumberedSlider** | Apache 2.0 |
+| **fishhook** | BSD-3 |
+| **shaderc** | Apache 2.0 |
+| **NRFileManager** | MPL-2.0 |
+| **UnzipKit** | BSD-2 |
+| **LTW render** | LGPL-3.0 |
+
+*Other components include AltKit and DyldDeNeuralyzer (bypasses Library Validation for loading external runtime).*
+
+---
+
+<div align="center">
+<i>Zenith-Launcher is licensed under the GPL-3.0 License.</i>
+</div>
