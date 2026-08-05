@@ -1,12 +1,7 @@
 name: Development build
 
 on:
-  pull_request:
-    types: [opened, reopened]
-    branches: ['Amethyst-iOS-J25Exp', 'main']
-  push:
-    branches: ['Amethyst-iOS-J25Exp', 'main']
-  workflow_dispatch:
+  workflow_dispatch: # Only manual trigger allowed
 
 jobs:
   build:
@@ -41,7 +36,6 @@ jobs:
           sudo mkdir -p /usr/local/bin
           # map the gmake binary symlink seamlessly across the target build runner paths
           sudo ln -sf /opt/homebrew/bin/gmake /usr/local/bin/gmake
-
       - name: Cache iOS JREs
         id: cache-jres
         uses: actions/cache@v5
@@ -54,7 +48,6 @@ jobs:
         run: |
           echo "SDKPATH=$(xcrun --sdk iphoneos --show-sdk-path)" >> $GITHUB_ENV
           echo "RUNNER=0" >> $GITHUB_ENV
-
       - name: Verify tools
         run: |
           gmake --version | head -1
@@ -63,33 +56,26 @@ jobs:
           wget --version | head -1
           xcrun --sdk iphoneos --show-sdk-version
           echo "SDKPATH=$SDKPATH"
-
       # Trigger gmake compilation pipelines with inline stderr filtering and execute post-build binary optimization
       - name: Build sideload IPA & TrollStore tIPA
         shell: bash
         run: |
           echo '#import <mach/mach.h>' | cat - Natives/JavaLauncher.m > temp && mv temp Natives/JavaLauncher.m
-
           JDK_BASE_PATH="${{ steps.setup-java.outputs.path }}"
           export PATH="$JDK_BASE_PATH/bin:/opt/homebrew/bin:$PATH"
           export JAVA_HOME="$JDK_BASE_PATH"
           export BOOTJDK="$JDK_BASE_PATH/bin"
-          export SLIMMED=1
           
           export CODE_SIGNING_ALLOWED=NO
           export CODE_SIGNING_REQUIRED=NO
           export CODE_SIGN_IDENTITY=""
-
           export CFLAGS="-Wno-error=implicit-function-declaration $CFLAGS"
           export CXXFLAGS="-Wno-error=implicit-function-declaration $CXXFLAGS"
-
           SIGN_FLAGS="CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="
-
-          # WARNING MITIGATION: Filter runtime stderr streams to suppress repetitive upstream vtool signature warnings
-          gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=2 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
+          # Only run package (removed dsym and slimmed)
+          gmake -j$(sysctl -n hw.ncpu) package PLATFORM=2 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
           
-          gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=2 TROLLSTORE_JIT_ENT=1 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
-
+          gmake -j$(sysctl -n hw.ncpu) package PLATFORM=2 TROLLSTORE_JIT_ENT=1 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
       - name: List artifacts
         if: always()
         run: ls -la artifacts/ || true
@@ -100,17 +86,7 @@ jobs:
         with:
           name: com.thenullastris.zenithlauncher-ios-trollstore
           path: artifacts/com.thenullastris.zenithlauncher-*-ios-trollstore.tipa
-          retention-days: 30
-          if-no-files-found: warn
-          compression-level: 0
-
-      - name: Upload TrollStore tIPA (slimmed)
-        if: always()
-        uses: actions/upload-artifact@v5
-        with:
-          name: com.thenullastris.zenithlauncher-ios-trollstore-slimmed
-          path: artifacts/com.thenullastris.zenithlauncher.slimmed-*-ios-trollstore.tipa
-          retention-days: 30
+          retention-days: 1
           if-no-files-found: warn
           compression-level: 0
 
@@ -120,27 +96,7 @@ jobs:
         with:
           name: com.thenullastris.zenithlauncher-ios
           path: artifacts/com.thenullastris.zenithlauncher-*-ios.ipa
-          retention-days: 30
-          if-no-files-found: warn
-          compression-level: 0
-
-      - name: Upload regular IPA (slimmed)
-        if: always()
-        uses: actions/upload-artifact@v5
-        with:
-          name: com.thenullastris.zenithlauncher-ios-slimmed
-          path: artifacts/com.thenullastris.zenithlauncher.slimmed-*-ios.ipa
-          retention-days: 30
-          if-no-files-found: warn
-          compression-level: 0
-
-      - name: Upload AngelAuraAmethyst.dSYM
-        if: always()
-        uses: actions/upload-artifact@v5
-        with:
-          name: AngelAuraAmethyst.dSYM
-          path: artifacts/AngelAuraAmethyst.dSYM
-          retention-days: 14
+          retention-days: 1
           if-no-files-found: warn
           compression-level: 0
 
@@ -154,3 +110,4 @@ jobs:
             Natives/build/CMakeFiles/CMakeOutput.log
             Natives/build/CMakeFiles/CMakeError.log
           if-no-files-found: ignore
+          retention-days: 1
