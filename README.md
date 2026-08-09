@@ -1,10 +1,11 @@
 <div align="center">
-<img src="Natives/Assets.xcassets/AppLogo-Vector.imageset/1024x1024-Transparent.png" alt="Zenith-Launcher Logo" width="200"/>
+<img src="Natives/Assets.xcassets/AppIcon-Light.appiconset/1024x1024-Monochrome-White.png" alt="Zenith-Launcher Logo" width="200"/>
   <h1>Zenith-Launcher</h1>
   <p><strong>A Minecraft: Java Edition Launcher for iOS based on PojavLauncher</strong></p>
 </div>
 
 ---
+
 
 ## 📱 Overview
 
