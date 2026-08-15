@@ -6,8 +6,8 @@ on:
 jobs:
   build:
     name: Development build
-    # FIXED: Switched from macos-14 (Apple Silicon) to macos-13 (Intel) for stable native JDK 8 compilation support
-    runs-on: macos-13
+    # FIXED: Restored fast macos-14 runner execution scope
+    runs-on: macos-14
     timeout-minutes: 20
     steps:
       - name: Checkout repository
@@ -19,12 +19,14 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode_15.4.app
 
       # provision the stable zulu jdk 8 runtime environment as structured in the upstream core
-      - name: Setup JDK 8 (Zulu)
+      # FIXED: Added explicit x64 architecture tracking to ensure Rosetta 2 compatibility on Apple Silicon
+      name: Setup JDK 8 (Zulu)
         uses: actions/setup-java@v5
         id: setup-java
         with:
           distribution: 'zulu'
           java-version: '8'
+          architecture: x64
 
       # initialize essential building and packaging utilities via homebrew infrastructure
       - name: Install brew dependencies
