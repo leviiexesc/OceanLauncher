@@ -19,8 +19,8 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode_15.4.app
 
       # provision the stable zulu jdk 8 runtime environment as structured in the upstream core
-      # FIXED: Added explicit x64 architecture tracking to ensure Rosetta 2 compatibility on Apple Silicon
-      name: Setup JDK 8 (Zulu)
+      # FIXED: Added the mandatory hyphen (-) and architecture restriction to ensure Rosetta 2 compatibility
+      - name: Setup JDK 8 (Zulu)
         uses: actions/setup-java@v5
         id: setup-java
         with:
