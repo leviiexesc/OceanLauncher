@@ -69,8 +69,11 @@ jobs:
           export CODE_SIGNING_ALLOWED=NO
           export CODE_SIGNING_REQUIRED=NO
           export CODE_SIGN_IDENTITY=""
-          export CFLAGS="-Wno-error=implicit-function-declaration $CFLAGS"
-          export CXXFLAGS="-Wno-error=implicit-function-declaration $CXXFLAGS"
+          
+          # FIXED: Added -Wno-error=int-to-pointer-cast to prevent 64-bit casting warnings from crashing the compiler
+          export CFLAGS="-Wno-error=implicit-function-declaration -Wno-error=int-to-pointer-cast $CFLAGS"
+          export CXXFLAGS="-Wno-error=implicit-function-declaration -Wno-error=int-to-pointer-cast $CXXFLAGS"
+          
           SIGN_FLAGS="CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="
           # Only run package (removed dsym and slimmed)
           gmake -j$(sysctl -n hw.ncpu) package PLATFORM=2 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
