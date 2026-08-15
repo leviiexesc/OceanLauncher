@@ -6,7 +6,8 @@ on:
 jobs:
   build:
     name: Development build
-    runs-on: macos-14
+    # FIXED: Switched from macos-14 (Apple Silicon) to macos-13 (Intel) for stable native JDK 8 compilation support
+    runs-on: macos-13
     timeout-minutes: 20
     steps:
       - name: Checkout repository
