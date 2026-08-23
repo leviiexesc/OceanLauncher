@@ -575,7 +575,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 0) { // Add to general section
-        return [NSString stringWithFormat:@"Zenith Launcher %@-%s\niOS %@ on %@",
+        return [NSString stringWithFormat:@"Zenith Launcher %@-%s\n%@ on %@",
             NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"],
             CONFIG_TYPE,
             UIDevice.currentDevice.completeOSVersion, [HostManager GetModelName]];
