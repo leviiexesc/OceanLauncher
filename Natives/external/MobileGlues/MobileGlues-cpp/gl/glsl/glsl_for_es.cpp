@@ -132,6 +132,18 @@ static TBuiltInResource InitResources() {
     Resources.limits.generalVariableIndexing = true;
     Resources.limits.generalConstantMatrixVectorIndexing = true;
 
+    // Keep glslang's built-in resource table valid for newer shader features.
+    Resources.maxDualSourceDrawBuffersEXT = 1;
+    Resources.maxMeshOutputVerticesEXT = 256;
+    Resources.maxMeshOutputPrimitivesEXT = 256;
+    Resources.maxMeshWorkGroupSizeX_EXT = 128;
+    Resources.maxMeshWorkGroupSizeY_EXT = 128;
+    Resources.maxMeshWorkGroupSizeZ_EXT = 128;
+    Resources.maxTaskWorkGroupSizeX_EXT = 128;
+    Resources.maxTaskWorkGroupSizeY_EXT = 128;
+    Resources.maxTaskWorkGroupSizeZ_EXT = 128;
+    Resources.maxMeshViewCountEXT = 4;
+
     return Resources;
 }
 
