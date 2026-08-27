@@ -79,9 +79,11 @@ jobs:
           
           SIGN_FLAGS="CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="
           # Only run package (removed dsym and slimmed)
-          gmake -j$(sysctl -n hw.ncpu) package PLATFORM=2 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
+          gmake -j1 --output-sync=target package PLATFORM=2 $SIGN_FLAGS 2>&1 | tee development-build.log
+          test ${PIPESTATUS[0]} -eq 0
           
-          gmake -j$(sysctl -n hw.ncpu) package PLATFORM=2 TROLLSTORE_JIT_ENT=1 $SIGN_FLAGS 2> >(grep -v "vtool warning: code signature will be invalid" >&2)
+          gmake -j1 --output-sync=target package PLATFORM=2 TROLLSTORE_JIT_ENT=1 $SIGN_FLAGS 2>&1 | tee development-trollstore-build.log
+          test ${PIPESTATUS[0]} -eq 0
       - name: List artifacts
         if: always()
         run: ls -la artifacts/ || true
@@ -113,6 +115,8 @@ jobs:
         with:
           name: build-logs
           path: |
+            development-build.log
+            development-trollstore-build.log
             Natives/build/CMakeFiles/CMakeOutput.log
             Natives/build/CMakeFiles/CMakeError.log
           if-no-files-found: ignore
