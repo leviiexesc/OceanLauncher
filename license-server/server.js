@@ -4,6 +4,7 @@ import { createServer } from "node:http";
 import { dirname, resolve } from "node:path";
 
 const port = Number(process.env.PORT || 8787);
+const host = process.env.HOST || "0.0.0.0";
 const adminToken = process.env.ADMIN_TOKEN;
 const maxDevices = Number(process.env.MAX_DEVICES || 2);
 const dataFile = resolve(process.env.DATA_FILE || "./data/licenses.json");
@@ -116,6 +117,6 @@ const server = createServer(async (request, response) => {
   }
 });
 
-server.listen(port, "127.0.0.1", () => {
-  console.log(`License server listening on http://127.0.0.1:${port}`);
+server.listen(port, host, () => {
+  console.log(`License server listening on http://${host}:${port}`);
 });

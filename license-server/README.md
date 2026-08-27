@@ -8,8 +8,11 @@ PowerShell:
 
 ```powershell
 $env:ADMIN_TOKEN = "use-a-long-random-secret-here"
+$env:HOST = "0.0.0.0"
 npm start
 ```
+
+For local Wi-Fi testing, the current example app endpoint is `http://192.168.100.8:8787/v1/activate`. Your iPhone and computer must be on the same Wi-Fi network, and Windows Firewall must allow inbound TCP port 8787. Replace the IP when your network changes. Use a public HTTPS deployment for release.
 
 Create one lifetime key from an administrator machine:
 
