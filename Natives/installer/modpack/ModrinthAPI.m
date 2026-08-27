@@ -15,6 +15,10 @@
     [facetString appendString:@"["];
     NSString *projectType = searchFilters[@"projectType"] ?: (searchFilters[@"isModpack"].boolValue ? @"modpack" : @"mod");
     [facetString appendFormat:@"[\"project_type:%@\"]", projectType];
+    NSString *loader = searchFilters[@"loader"];
+    if (loader.length > 0 && ![loader isEqualToString:@"all"] && [projectType isEqualToString:@"mod"]) {
+        [facetString appendFormat:@",[\"categories:%@\"]", loader];
+    }
     if (searchFilters[@"mcVersion"].length > 0) {
         [facetString appendFormat:@",[\"versions:%@\"]", searchFilters[@"mcVersion"]];
     }

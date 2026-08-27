@@ -21,6 +21,8 @@
 @property(nonatomic) NSMutableDictionary *filters;
 @property ModrinthAPI *modrinth;
 @property(nonatomic) NSString *projectType;
+@property(nonatomic) NSString *selectedLoader;
+@property(nonatomic) UIBarButtonItem *loaderBarButtonItem;
 @end
 
 @implementation ModpackInstallViewController
@@ -29,6 +31,7 @@
     self = [super initWithStyle:UITableViewStyleInsetGrouped];
     if (self) {
         _projectType = projectType.length > 0 ? projectType : @"modpack";
+        _selectedLoader = @"all";
         self.title = [self.projectType isEqualToString:@"resourcepack"] ? @"Resource Packs" : self.projectType.capitalizedString;
     }
     return self;
@@ -43,12 +46,31 @@
     self.searchController.obscuresBackgroundDuringPresentation = NO;
     self.navigationItem.searchController = self.searchController;
     self.modrinth = [ModrinthAPI new];
+    if ([self.projectType isEqualToString:@"mod"]) {
+        self.loaderBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Loader" menu:[self loaderMenu]];
+        self.navigationItem.leftBarButtonItem = self.loaderBarButtonItem;
+    }
     self.filters = @{
         @"projectType": self.projectType ?: @"modpack",
         @"name": @" "
         // mcVersion
     }.mutableCopy;
     [self updateSearchResults];
+}
+
+- (UIMenu *)loaderMenu {
+    NSArray<NSString *> *loaders = @[@"All", @"Fabric", @"Forge", @"NeoForge", @"Quilt"];
+    NSMutableArray<UIAction *> *actions = [NSMutableArray arrayWithCapacity:loaders.count];
+    for (NSString *loader in loaders) {
+        [actions addObject:[UIAction actionWithTitle:loader image:nil identifier:nil handler:^(UIAction *action) {
+            self.selectedLoader = [loader isEqualToString:@"All"] ? @"all" : loader.lowercaseString;
+            self.loaderBarButtonItem.title = loader;
+            self.filters[@"loader"] = self.selectedLoader;
+            self.list = nil;
+            [self updateSearchResults];
+        }]];
+    }
+    return [UIMenu menuWithTitle:@"Mod loader" children:actions];
 }
 
 - (void)loadSearchResultsWithPrevList:(BOOL)prevList {
