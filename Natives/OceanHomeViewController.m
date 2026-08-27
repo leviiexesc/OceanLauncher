@@ -17,6 +17,10 @@
     return self;
 }
 
+- (NSString *)imageName {
+    return @"MenuHome";
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:0.025 green:0.055 blue:0.09 alpha:1.0];

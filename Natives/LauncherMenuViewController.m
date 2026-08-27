@@ -32,7 +32,7 @@
     id vc = [class new];
     LauncherMenuCustomItem *item = [[LauncherMenuCustomItem alloc] init];
     item.title = [vc title];
-    item.imageName = [vc imageName];
+    item.imageName = [vc respondsToSelector:@selector(imageName)] ? [vc imageName] : @"";
     // View controllers are put into an array to keep its state
     item.vcArray = @[vc];
     return item;
@@ -67,6 +67,26 @@
         [LauncherMenuCustomItem vcClass:LauncherProfilesViewController.class],
         [LauncherMenuCustomItem vcClass:LauncherPreferencesViewController.class],
     ].mutableCopy;
+    [self.options addObject:(id)[LauncherMenuCustomItem
+                                 title:@"Mods"
+                                 imageName:@"shippingbox.fill" action:^{
+        openLink(self, [NSURL URLWithString:@"https://modrinth.com/mods"]);
+    }]];
+    [self.options addObject:(id)[LauncherMenuCustomItem
+                                 title:@"Shaders"
+                                 imageName:@"wand.and.stars" action:^{
+        openLink(self, [NSURL URLWithString:@"https://modrinth.com/shaders"]);
+    }]];
+    [self.options addObject:(id)[LauncherMenuCustomItem
+                                 title:@"Resource packs"
+                                 imageName:@"square.grid.2x2" action:^{
+        openLink(self, [NSURL URLWithString:@"https://modrinth.com/resourcepacks"]);
+    }]];
+    [self.options addObject:(id)[LauncherMenuCustomItem
+                                 title:@"Contact"
+                                 imageName:@"envelope" action:^{
+        openLink(self, [NSURL URLWithString:@"https://wiki.angelauramc.dev/contact"]);
+    }]];
     if (realUIIdiom != UIUserInterfaceIdiomTV) {
         [self.options addObject:(id)[LauncherMenuCustomItem
                                      title:localize(@"launcher.menu.custom_controls", nil)
@@ -204,8 +224,9 @@
 
     cell.textLabel.text = [self.options[indexPath.row] title];
     
-    UIImage *origImage = [UIImage systemImageNamed:[self.options[indexPath.row]
-        performSelector:@selector(imageName)]];
+    LauncherMenuCustomItem *item = self.options[indexPath.row];
+    NSString *imageName = item.imageName ?: @"";
+    UIImage *origImage = [UIImage systemImageNamed:imageName];
     if (origImage) {
         UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:CGSizeMake(40, 40)];
         UIImage *image = [renderer imageWithActions:^(UIGraphicsImageRendererContext*_Nonnull myContext) {
@@ -218,8 +239,7 @@
     if (cell.imageView.image == nil) {
         cell.imageView.layer.magnificationFilter = kCAFilterNearest;
         cell.imageView.layer.minificationFilter = kCAFilterNearest;
-        cell.imageView.image = [UIImage imageNamed:[self.options[indexPath.row]
-            performSelector:@selector(imageName)]];
+        cell.imageView.image = [UIImage imageNamed:imageName];
         cell.imageView.image = [cell.imageView.image _imageWithSize:CGSizeMake(40, 40)];
     }
     return cell;
@@ -240,9 +260,13 @@
             [contentNavigationController setViewControllers:selected.vcArray animated:NO];
             self.lastSelectedIndex = indexPath.row;
         }
-        selected.vcArray[0].navigationItem.rightBarButtonItem = self.accountBtnItem;
-        selected.vcArray[0].navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-        selected.vcArray[0].navigationItem.leftItemsSupplementBackButton = true;
+        UIViewController *viewController = selected.vcArray.firstObject;
+        if (!viewController) {
+            return;
+        }
+        viewController.navigationItem.rightBarButtonItem = self.accountBtnItem;
+        viewController.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+        viewController.navigationItem.leftItemsSupplementBackButton = true;
     }
 }
 
