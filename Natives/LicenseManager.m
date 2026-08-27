@@ -70,7 +70,9 @@ static NSString * const OceanLicenseKeychainAccount = @"activation-key";
                     (__bridge id)kSecAttrService: OceanLicenseKeychainService,
                     (__bridge id)kSecAttrAccount: OceanLicenseKeychainAccount
                 };
-                NSDictionary *item = [query dictionaryByAddingEntriesFromDictionary:@{(__bridge id)kSecValueData: keyData, (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly}];
+                NSMutableDictionary *item = query.mutableCopy;
+                item[(__bridge id)kSecValueData] = keyData;
+                item[(__bridge id)kSecAttrAccessible] = (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly;
                 SecItemDelete((__bridge CFDictionaryRef)query);
                 SecItemAdd((__bridge CFDictionaryRef)item, NULL);
                 setPrefObject(@"license.activationId", result[@"licenseId"]);
