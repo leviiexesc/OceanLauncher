@@ -180,7 +180,8 @@ typedef NS_ENUM(NSUInteger, LauncherProfilesTableSection) {
     cell.imageView.layer.magnificationFilter = kCAFilterNearest;
 
     UIImage *fallbackImage = [[UIImage imageNamed:@"DefaultProfile"] _imageWithSize:CGSizeMake(40, 40)];
-    [cell.imageView setImageWithURL:[NSURL URLWithString:profile[@"icon"]] placeholderImage:fallbackImage];
+    NSString *iconURL = [profile[@"icon"] isKindOfClass:NSString.class] ? profile[@"icon"] : nil;
+    [cell.imageView setImageWithURL:[NSURL URLWithString:iconURL] placeholderImage:fallbackImage];
 }
 
 - (UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

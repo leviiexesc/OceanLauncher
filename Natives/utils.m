@@ -35,6 +35,15 @@ BOOL isJITEnabled(BOOL checkCSFlags) {
 }
 
 void openLink(UIViewController* sender, NSURL* link) {
+    NSString *scheme = link.scheme.lowercaseString;
+    if (link == nil || (![scheme isEqualToString:@"https"] && ![scheme isEqualToString:@"http"])) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:localize(@"Error", nil)
+                                                                         message:localize(@"Unable to open this link.", nil)
+                                                                  preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:localize(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [sender presentViewController:alert animated:YES completion:nil];
+        return;
+    }
     if (NSClassFromString(@"SFSafariViewController") == nil) {
         NSData *data = [link.absoluteString dataUsingEncoding:NSUTF8StringEncoding];
         CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];

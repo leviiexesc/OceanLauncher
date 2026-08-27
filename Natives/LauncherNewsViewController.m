@@ -21,6 +21,18 @@ UIEdgeInsets insets;
     return @"MenuNews";
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    UIBarButtonItem *feedback = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"square.and.pencil"]
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(showFeedbackForm)];
+    UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                target:self
+                                                                                action:@selector(refreshNews)];
+    self.navigationItem.rightBarButtonItems = @[[sidebarViewController drawAccountButton], feedback, refresh];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -45,6 +57,15 @@ UIEdgeInsets insets;
     [webView loadRequest:request];
     [self.view addSubview:webView];
 
+    UIBarButtonItem *feedback = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"square.and.pencil"]
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(showFeedbackForm)];
+    UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                target:self
+                                                                                action:@selector(refreshNews)];
+    self.navigationItem.rightBarButtonItems = @[feedback, refresh];
+
     if(!isJailbroken && getPrefBool(@"warnings.limited_ram_warn") && (roundf(NSProcessInfo.processInfo.physicalMemory / 0x1000000) < 3900)) {
         // "This device has a limited amount of memory available."
         [self showWarningAlert:@"limited_ram" hasPreference:YES exitWhenCompleted:NO];
@@ -53,6 +74,29 @@ UIEdgeInsets insets;
     self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     self.navigationItem.rightBarButtonItem = [sidebarViewController drawAccountButton];
     self.navigationItem.leftItemsSupplementBackButton = true;
+}
+
+- (void)refreshNews {
+    [webView reload];
+}
+
+- (void)showFeedbackForm {
+    UIAlertController *form = [UIAlertController alertControllerWithTitle:@"Send feedback"
+                                                                       message:@"Help improve Ocean Launcher"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+    [form addTextFieldWithConfigurationHandler:^(UITextField *field) {
+        field.placeholder = @"What should we improve?";
+        field.clearButtonMode = UITextFieldViewModeWhileEditing;
+    }];
+    [form addAction:[UIAlertAction actionWithTitle:localize(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [form addAction:[UIAlertAction actionWithTitle:@"Share" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSString *feedback = form.textFields.firstObject.text;
+        if (feedback.length == 0) return;
+        UIActivityViewController *share = [[UIActivityViewController alloc] initWithActivityItems:@[feedback] applicationActivities:nil];
+        share.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
+        [self presentViewController:share animated:YES completion:nil];
+    }]];
+    [self presentViewController:form animated:YES completion:nil];
 }
 
 -(void)showWarningAlert:(NSString *)key hasPreference:(BOOL)isPreferenced exitWhenCompleted:(BOOL)shouldExit {
@@ -111,6 +155,15 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
         return;
     }
     decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    NSLog(@"[News] Could not load changelog: %@", error.localizedDescription);
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"News unavailable"
+                                                                       message:@"The live changelog could not be loaded. Check your connection and try refresh."
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:localize(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

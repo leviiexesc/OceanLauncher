@@ -18,7 +18,7 @@
 }
 
 - (NSString *)imageName {
-    return @"MenuHome";
+    return @"house.fill";
 }
 
 - (void)viewDidLoad {

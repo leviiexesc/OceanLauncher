@@ -82,11 +82,6 @@
                                  imageName:@"square.grid.2x2" action:^{
         openLink(self, [NSURL URLWithString:@"https://modrinth.com/resourcepacks"]);
     }]];
-    [self.options addObject:(id)[LauncherMenuCustomItem
-                                 title:@"Contact"
-                                 imageName:@"envelope" action:^{
-        openLink(self, [NSURL URLWithString:@"https://wiki.angelauramc.dev/contact"]);
-    }]];
     if (realUIIdiom != UIUserInterfaceIdiomTV) {
         [self.options addObject:(id)[LauncherMenuCustomItem
                                      title:localize(@"launcher.menu.custom_controls", nil)
@@ -226,6 +221,7 @@
     
     LauncherMenuCustomItem *item = self.options[indexPath.row];
     NSString *imageName = item.imageName ?: @"";
+    cell.imageView.image = nil;
     UIImage *origImage = [UIImage systemImageNamed:imageName];
     if (origImage) {
         UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:CGSizeMake(40, 40)];
@@ -240,7 +236,12 @@
         cell.imageView.layer.magnificationFilter = kCAFilterNearest;
         cell.imageView.layer.minificationFilter = kCAFilterNearest;
         cell.imageView.image = [UIImage imageNamed:imageName];
-        cell.imageView.image = [cell.imageView.image _imageWithSize:CGSizeMake(40, 40)];
+        if (cell.imageView.image != nil) {
+            cell.imageView.image = [cell.imageView.image _imageWithSize:CGSizeMake(40, 40)];
+        } else {
+            UIImage *fallback = [UIImage systemImageNamed:@"circle.grid.2x2.fill"];
+            cell.imageView.image = [fallback imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        }
     }
     return cell;
 }
