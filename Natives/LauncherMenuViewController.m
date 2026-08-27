@@ -9,8 +9,6 @@
 #import "LauncherPreferences.h"
 #import "LauncherPreferencesViewController.h"
 #import "LauncherProfilesViewController.h"
-#import "LicenseManager.h"
-#import "LicenseViewController.h"
 #import "installer/ModpackInstallViewController.h"
 #import "PLProfiles.h"
 #import "UIButton+AFNetworking.h"
@@ -66,17 +64,6 @@
     
     self.options = @[
         [LauncherMenuCustomItem vcClass:OceanHomeViewController.class],
-        [LauncherMenuCustomItem title:[NSString stringWithFormat:@"License: %@", [LicenseManager expiryText]] imageName:@"checkmark.seal.fill" action:^{
-            LicenseViewController *license = [LicenseViewController new];
-            license.onActivated = ^{
-                [self dismissViewControllerAnimated:YES completion:nil];
-                self.options[1].title = [NSString stringWithFormat:@"License: %@", [LicenseManager expiryText]];
-                [self.tableView reloadData];
-            };
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:license];
-            nav.modalPresentationStyle = UIModalPresentationPageSheet;
-            [self presentViewController:nav animated:YES completion:nil];
-        }],
         [LauncherMenuCustomItem vcClass:LauncherNewsViewController.class],
         [LauncherMenuCustomItem vcClass:LauncherProfilesViewController.class],
         [LauncherMenuCustomItem vcClass:LauncherPreferencesViewController.class],
