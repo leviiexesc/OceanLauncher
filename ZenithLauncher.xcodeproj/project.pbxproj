@@ -43,19 +43,19 @@
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
-		054957C52986E8DC00EFD4CE /* Zenith Launcher */ = {
+		054957C52986E8DC00EFD4CE /* Ocean Launcher */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "-j$(sysctl -n hw.ncpu) dsym package";
-			buildConfigurationList = 054957C82986E8DC00EFD4CE /* Build configuration list for PBXLegacyTarget "Zenith Launcher" */;
+			buildConfigurationList = 054957C82986E8DC00EFD4CE /* Build configuration list for PBXLegacyTarget "Ocean Launcher" */;
 			buildPhases = (
 			);
 			buildToolPath = /usr/local/bin/gmake;
 			buildWorkingDirectory = "";
 			dependencies = (
 			);
-			name = "Zenith Launcher";
+			name = "Ocean Launcher";
 			passBuildSettingsInEnvironment = 1;
-			productName = ZenithLauncher;
+			productName = OceanLauncher;
 		};
 /* End PBXLegacyTarget section */
 
@@ -71,7 +71,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 054957C42986E8DC00EFD4CE /* Build configuration list for PBXProject "Zenith Launcher" */;
+			buildConfigurationList = 054957C42986E8DC00EFD4CE /* Build configuration list for PBXProject "Ocean Launcher" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -83,7 +83,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				054957C52986E8DC00EFD4CE /* Zenith Launcher */,
+				054957C52986E8DC00EFD4CE /* Ocean Launcher */,
 			);
 		};
 /* End PBXProject section */
@@ -138,7 +138,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		054957C42986E8DC00EFD4CE /* Build configuration list for PBXProject "Zenith Launcher" */ = {
+		054957C42986E8DC00EFD4CE /* Build configuration list for PBXProject "Ocean Launcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				054957C62986E8DC00EFD4CE /* Debug */,
@@ -147,7 +147,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		054957C82986E8DC00EFD4CE /* Build configuration list for PBXLegacyTarget "Zenith Launcher" */ = {
+		054957C82986E8DC00EFD4CE /* Build configuration list for PBXLegacyTarget "Ocean Launcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				054957C92986E8DC00EFD4CE /* Debug */,

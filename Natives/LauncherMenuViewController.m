@@ -5,6 +5,7 @@
 #import "LauncherNavigationController.h"
 #import "LauncherMenuViewController.h"
 #import "LauncherNewsViewController.h"
+#import "OceanHomeViewController.h"
 #import "LauncherPreferences.h"
 #import "LauncherPreferencesViewController.h"
 #import "LauncherProfilesViewController.h"
@@ -54,12 +55,14 @@
     
     self.isInitialVc = YES;
     
-    UIImageView *titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppLogo"]];
-    [titleView setContentMode:UIViewContentModeScaleAspectFit];
+    UILabel *titleView = [UILabel new];
+    titleView.text = @"OCEAN LAUNCHER";
+    titleView.textColor = [UIColor colorWithRed:0.08 green:0.60 blue:0.82 alpha:1.0];
+    titleView.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
     self.navigationItem.titleView = titleView;
-    [titleView sizeToFit];
     
     self.options = @[
+        [LauncherMenuCustomItem vcClass:OceanHomeViewController.class],
         [LauncherMenuCustomItem vcClass:LauncherNewsViewController.class],
         [LauncherMenuCustomItem vcClass:LauncherProfilesViewController.class],
         [LauncherMenuCustomItem vcClass:LauncherPreferencesViewController.class],
@@ -97,7 +100,7 @@
              performSelector:@selector(initWithSharingItems:)
              withObject:@[[NSURL URLWithString:latestlogPath]]];
         }
-        activityVC.popoverPresentationController.sourceView = titleView;
+        activityVC.popoverPresentationController.sourceView = self.view;
         activityVC.popoverPresentationController.sourceRect = titleView.bounds;
         [self presentViewController:activityVC animated:YES completion:nil];
     }]];
@@ -130,7 +133,7 @@
     
     [self updateAccountInfo];
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     self.lastSelectedIndex = 1;

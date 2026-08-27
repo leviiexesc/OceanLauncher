@@ -1,11 +1,7 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/thenullastris/Zenith-Launcher/main/docs/assets/zenith-hero.png" alt="A luminous portal on a floating voxel island beside a mobile device" width="100%" />
+  <h1>OCEAN LAUNCHER</h1>
   <br />
   <br />
-  <img src="Natives/Assets.xcassets/AppIcon-Light.appiconset/1024x1024-Monochrome-White.png" alt="Zenith Launcher icon" width="132" />
-
-  # Zenith Launcher
-
   **A community-built Minecraft: Java Edition launcher for iOS.**
 
   <a href="https://github.com/thenullastris/Zenith-Launcher/actions/workflows/development.yml"><img src="https://img.shields.io/badge/build-Development%20workflow-00D8C8?style=for-the-badge&logo=githubactions&logoColor=white" alt="Development workflow" /></a>
@@ -17,10 +13,10 @@
 <br />
 
 > [!NOTE]
-> **Zenith Launcher** is a custom iOS build based on [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher) and AngelAuraAmethyst. It is tuned for launching Minecraft Java Edition on iPhone and iPad, with a focus on modern 26.x releases, custom runtimes, and mobile-friendly controls.
+> **Ocean Launcher** is a custom iOS build based on [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher) and the existing native launcher engine. It is tuned for launching Minecraft Java Edition on iPhone and iPad, with a focus on modern releases, custom runtimes, and mobile-friendly controls.
 
 > [!IMPORTANT]
-> This is an **unofficial community project**. For Zenith-specific problems, please open an [issue](https://github.com/thenullastris/Zenith-Launcher/issues) here rather than contacting the upstream Amethyst developers.
+> This is an **unofficial community project**. For Ocean-specific problems, use the project issue tracker rather than contacting upstream developers.
 
 ---
 
@@ -131,5 +127,5 @@ Other components include AltKit and DyldDeNeuralyzer, which support external run
 ---
 
 <div align="center">
-  <sub>Zenith Launcher is distributed under the <a href="LICENSE">GNU General Public License v3.0</a>.</sub>
+  <sub>Ocean Launcher is distributed under the <a href="LICENSE">GNU General Public License v3.0</a>.</sub>
 </div>

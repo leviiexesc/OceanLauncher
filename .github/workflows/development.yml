@@ -90,8 +90,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: com.thenullastris.zenithlauncher-ios-trollstore
-          path: artifacts/com.thenullastris.zenithlauncher-*-ios-trollstore.tipa
+          name: com.oceanlauncher.minecraft-ios-trollstore
+          path: artifacts/com.oceanlauncher.minecraft-*-ios-trollstore.tipa
           retention-days: 1
           if-no-files-found: warn
           compression-level: 0
@@ -100,8 +100,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: com.thenullastris.zenithlauncher-ios
-          path: artifacts/com.thenullastris.zenithlauncher-*-ios.ipa
+          name: com.oceanlauncher.minecraft-ios
+          path: artifacts/com.oceanlauncher.minecraft-*-ios.ipa
           retention-days: 1
           if-no-files-found: warn
           compression-level: 0

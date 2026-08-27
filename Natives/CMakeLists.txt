@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-project(AngelAuraAmethyst)
+project(OceanLauncher)
 
 configure_file(${CMAKE_CURRENT_LIST_DIR}/config.h.in ${CMAKE_CURRENT_LIST_DIR}/config.h)
 
@@ -207,6 +207,8 @@ add_executable(AngelAuraAmethyst
   GameSurfaceView.m
   JavaGUIViewController.m
   LauncherMenuViewController.m
+  OceanHomeViewController.m
+  OceanVersionsViewController.m
   LauncherNavigationController.m
   LauncherNewsViewController.m
   LauncherPreferences.m

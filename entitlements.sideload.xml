@@ -2,9 +2,9 @@
 <plist version="1.0">
 <dict>
 	<key>application-identifier</key>
-	<string>com.thenullastris.zenithlauncher</string>
+    <string>com.oceanlauncher.minecraft</string>
 <key>com.apple.private.security.container-required</key>
-	<string>com.thenullastris.zenithlauncher</string>
+    <string>com.oceanlauncher.minecraft</string>
     <key>get-task-allow</key>
     <true/>
 
