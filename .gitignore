@@ -16,3 +16,5 @@ entitlements.codesign.xml
 /Compare
 /.rule/
 /sample/
+/license-server/data/
+/license-server/.env

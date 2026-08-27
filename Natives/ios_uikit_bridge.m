@@ -4,6 +4,8 @@
 #import "LauncherNavigationController.h"
 #import "LauncherPreferences.h"
 #import "LauncherSplitViewController.h"
+#import "LicenseManager.h"
+#import "LicenseViewController.h"
 #import "PLLogOutputView.h"
 #import "SurfaceViewController.h"
 
@@ -154,7 +156,19 @@ void UIKit_returnToSplitView() {
 }
 
 void launchInitialViewController(UIWindow *window) {
-    window.rootViewController = [[LauncherSplitViewController alloc] initWithStyle:UISplitViewControllerStyleDoubleColumn];
+    if ([LicenseManager isActivated]) {
+        window.rootViewController = [[LauncherSplitViewController alloc] initWithStyle:UISplitViewControllerStyleDoubleColumn];
+        return;
+    }
+
+    LicenseViewController *license = [LicenseViewController new];
+    __weak UIWindow *weakWindow = window;
+    license.onActivated = ^{
+        UIWindow *strongWindow = weakWindow;
+        strongWindow.rootViewController = [[LauncherSplitViewController alloc] initWithStyle:UISplitViewControllerStyleDoubleColumn];
+        [strongWindow makeKeyAndVisible];
+    };
+    window.rootViewController = license;
 #if 0
     if (getPrefBool(@"internal.internal_launch_on_boot")) {
         window.rootViewController = [[SurfaceViewController alloc] init];

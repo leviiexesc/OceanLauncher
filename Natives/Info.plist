@@ -6,6 +6,8 @@
 	<string></string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>OceanLicenseAPIURL</key>
+	<string>https://YOUR-LICENSE-SERVER.example.com/v1/activate</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
