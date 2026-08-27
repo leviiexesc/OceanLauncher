@@ -56,4 +56,13 @@
         object:self userInfo:userInfo];
 }
 
+- (void)installResourceFromDetail:(NSDictionary *)resourceDetail atIndex:(NSUInteger)selectedVersion projectType:(NSString *)projectType {
+    NSDictionary *userInfo = @{
+        @"detail": resourceDetail,
+        @"index": @(selectedVersion),
+        @"projectType": projectType ?: @"modpack"
+    };
+    [NSNotificationCenter.defaultCenter postNotificationName:@"InstallModpack" object:self userInfo:userInfo];
+}
+
 @end

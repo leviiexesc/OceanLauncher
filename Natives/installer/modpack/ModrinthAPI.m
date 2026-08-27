@@ -13,7 +13,8 @@
 
     NSMutableString *facetString = [NSMutableString new];
     [facetString appendString:@"["];
-    [facetString appendFormat:@"[\"project_type:%@\"]", searchFilters[@"isModpack"].boolValue ? @"modpack" : @"mod"];
+    NSString *projectType = searchFilters[@"projectType"] ?: (searchFilters[@"isModpack"].boolValue ? @"modpack" : @"mod");
+    [facetString appendFormat:@"[\"project_type:%@\"]", projectType];
     if (searchFilters[@"mcVersion"].length > 0) {
         [facetString appendFormat:@",[\"versions:%@\"]", searchFilters[@"mcVersion"]];
     }

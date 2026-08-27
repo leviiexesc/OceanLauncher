@@ -60,7 +60,8 @@ static NSString * const OceanLicenseKeychainAccount = @"activation-key";
         if (error != nil) {
             message = @"Could not reach the license server. Check your internet connection.";
         } else if (![response isKindOfClass:NSHTTPURLResponse.class] || ((NSHTTPURLResponse *)response).statusCode < 200 || ((NSHTTPURLResponse *)response).statusCode >= 300) {
-            message = @"The license server rejected this key.";
+            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            message = [result[@"message"] isKindOfClass:NSString.class] ? result[@"message"] : @"The license server rejected this key.";
         } else {
             NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             if ([result[@"valid"] boolValue] && [result[@"licenseId"] isKindOfClass:NSString.class]) {

@@ -20,9 +20,19 @@
 @property(nonatomic) NSMutableArray *list;
 @property(nonatomic) NSMutableDictionary *filters;
 @property ModrinthAPI *modrinth;
+@property(nonatomic) NSString *projectType;
 @end
 
 @implementation ModpackInstallViewController
+
+- (instancetype)initWithProjectType:(NSString *)projectType {
+    self = [super initWithStyle:UITableViewStyleInsetGrouped];
+    if (self) {
+        _projectType = projectType.length > 0 ? projectType : @"modpack";
+        self.title = [self.projectType isEqualToString:@"resourcepack"] ? @"Resource Packs" : self.projectType.capitalizedString;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,7 +44,7 @@
     self.navigationItem.searchController = self.searchController;
     self.modrinth = [ModrinthAPI new];
     self.filters = @{
-        @"isModpack": @(YES),
+        @"projectType": self.projectType ?: @"modpack",
         @"name": @" "
         // mcVersion
     }.mutableCopy;
@@ -157,7 +167,9 @@
             [self actionClose];
             NSString *tmpIconPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"icon.png"];
                 [UIImagePNGRepresentation([cell.imageView.image _imageWithSize:CGSizeMake(40, 40)]) writeToFile:tmpIconPath atomically:YES];
-            [self.modrinth installModpackFromDetail:self.list[indexPath.row] atIndex:i];
+            [self.modrinth installResourceFromDetail:self.list[indexPath.row]
+                                             atIndex:i
+                                         projectType:self.projectType ?: @"modpack"];
         }]];
     }];
 

@@ -411,7 +411,13 @@ static void *ProgressObserverContext = &ProgressObserverContext;
                 weakSelf.progressVC = nil;
             });
         };
-        [self.task downloadModpackFromAPI:notification.object detail:userInfo[@"detail"] atIndex:[userInfo[@"index"] unsignedLongValue]];
+        NSString *projectType = userInfo[@"projectType"];
+        if ([projectType isEqualToString:@"mod"] || [projectType isEqualToString:@"shader"] || [projectType isEqualToString:@"resourcepack"]) {
+            NSString *folder = [projectType isEqualToString:@"mod"] ? @"mods" : ([projectType isEqualToString:@"shader"] ? @"shaderpacks" : @"resourcepacks");
+            [self.task downloadResourceFromAPI:notification.object detail:userInfo[@"detail"] atIndex:[userInfo[@"index"] unsignedLongValue] destinationFolder:folder];
+        } else {
+            [self.task downloadModpackFromAPI:notification.object detail:userInfo[@"detail"] atIndex:[userInfo[@"index"] unsignedLongValue]];
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             self.progressViewMain.observedProgress = self.task.progress;
             [self.task.progress addObserver:self

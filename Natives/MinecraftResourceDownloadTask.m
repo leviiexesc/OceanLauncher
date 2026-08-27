@@ -282,6 +282,21 @@
     [task resume];
 }
 
+- (void)downloadResourceFromAPI:(ModpackAPI *)api detail:(NSDictionary *)resourceDetail atIndex:(NSUInteger)selectedVersion destinationFolder:(NSString *)destinationFolder {
+    [self prepareForDownload];
+
+    NSString *url = resourceDetail[@"versionUrls"][selectedVersion];
+    NSUInteger size = [resourceDetail[@"versionSizes"][selectedVersion] unsignedLongLongValue];
+    NSString *sha = resourceDetail[@"versionHashes"][selectedVersion];
+    NSString *filename = [NSURL URLWithString:url].lastPathComponent.stringByRemovingPercentEncoding;
+    if (filename.length == 0) filename = [NSString stringWithFormat:@"%@-%lu", resourceDetail[@"title"], (unsigned long)selectedVersion];
+    NSString *destinationPath = [NSString stringWithFormat:@"%s/%@/%@", getenv("POJAV_GAME_DIR"), destinationFolder, filename];
+    [NSFileManager.defaultManager createDirectoryAtPath:destinationPath.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
+
+    NSURLSessionDownloadTask *task = [self createDownloadTask:url size:size sha:sha altName:filename toPath:destinationPath];
+    [task resume];
+}
+
 #pragma mark - Utilities
 
 - (void)prepareForDownload {

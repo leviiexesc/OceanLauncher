@@ -11,6 +11,7 @@
 #import "LauncherProfilesViewController.h"
 #import "LicenseManager.h"
 #import "LicenseViewController.h"
+#import "installer/ModpackInstallViewController.h"
 #import "PLProfiles.h"
 #import "UIButton+AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
@@ -83,17 +84,17 @@
     [self.options addObject:(id)[LauncherMenuCustomItem
                                  title:@"Mods"
                                  imageName:@"shippingbox.fill" action:^{
-        openLink(self, [NSURL URLWithString:@"https://modrinth.com/mods"]);
+                    [self presentResourceBrowser:@"mod"];
     }]];
     [self.options addObject:(id)[LauncherMenuCustomItem
                                  title:@"Shaders"
                                  imageName:@"wand.and.stars" action:^{
-        openLink(self, [NSURL URLWithString:@"https://modrinth.com/shaders"]);
+                    [self presentResourceBrowser:@"shader"];
     }]];
     [self.options addObject:(id)[LauncherMenuCustomItem
                                  title:@"Resource packs"
                                  imageName:@"square.grid.2x2" action:^{
-        openLink(self, [NSURL URLWithString:@"https://modrinth.com/resourcepacks"]);
+                    [self presentResourceBrowser:@"resourcepack"];
     }]];
     if (realUIIdiom != UIUserInterfaceIdiomTV) {
         [self.options addObject:(id)[LauncherMenuCustomItem
@@ -310,6 +311,11 @@
     popoverController.permittedArrowDirections = UIPopoverArrowDirectionAny;
     popoverController.delegate = vc;
     [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)presentResourceBrowser:(NSString *)projectType {
+    ModpackInstallViewController *browser = [[ModpackInstallViewController alloc] initWithProjectType:projectType];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:browser] animated:YES completion:nil];
 }
 
 - (void)updateAccountInfo {

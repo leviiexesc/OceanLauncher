@@ -13,5 +13,6 @@
 
 - (void)downloadVersion:(NSDictionary *)version;
 - (void)downloadModpackFromAPI:(ModpackAPI *)api detail:(NSDictionary *)modDetail atIndex:(NSUInteger)selectedVersion;
+- (void)downloadResourceFromAPI:(ModpackAPI *)api detail:(NSDictionary *)resourceDetail atIndex:(NSUInteger)selectedVersion destinationFolder:(NSString *)destinationFolder;
 
 @end
