@@ -6,10 +6,6 @@
 	<string></string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>OceanLicenseAPIURL</key>
-	<string>http://192.168.100.8:8787/v1/activate</string>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>Ocean Launcher uses your local network to activate your license.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

@@ -210,8 +210,6 @@ add_executable(AngelAuraAmethyst
   OceanHomeViewController.m
   OceanVersionsViewController.m
   LauncherNavigationController.m
-  LicenseManager.m
-  LicenseViewController.m
   LauncherNewsViewController.m
   LauncherPreferences.m
   LauncherPreferencesViewController.m
