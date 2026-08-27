@@ -5,6 +5,10 @@ OUTPUTDIR := build
 SOURCES := $(shell find $(SOURCEDIR) -type f -name '*.java')
 CLASSES := $(SOURCES:$(SOURCEDIR)/%.java=$(OUTPUTDIR)/%.class)
 
+# Each source is compiled into the shared build/classes directory, so serialize
+# this small Java build to prevent parallel javac output races.
+.NOTPARALLEL:
+
 TARGETS := $(shell find $(SOURCEDIR) -mindepth 1 -maxdepth 1 -type d)
 TARGETS := $(TARGETS:$(SOURCEDIR)/%=$(OUTPUTDIR)/%.jar)
 
