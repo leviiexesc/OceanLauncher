@@ -67,17 +67,17 @@
         [LauncherMenuCustomItem vcClass:LauncherPreferencesViewController.class],
     ].mutableCopy;
     [self.options addObject:(id)[LauncherMenuCustomItem
-                                 title:@"Mods"
+                                 title:localize(@"Mods", nil)
                                  imageName:@"shippingbox.fill" action:^{
                     [self presentResourceBrowser:@"mod"];
     }]];
     [self.options addObject:(id)[LauncherMenuCustomItem
-                                 title:@"Shaders"
+                                 title:localize(@"Shaders", nil)
                                  imageName:@"wand.and.stars" action:^{
                     [self presentResourceBrowser:@"shader"];
     }]];
     [self.options addObject:(id)[LauncherMenuCustomItem
-                                 title:@"Resource packs"
+                                 title:localize(@"Resource packs", nil)
                                  imageName:@"square.grid.2x2" action:^{
                     [self presentResourceBrowser:@"resourcepack"];
     }]];
