@@ -5,7 +5,6 @@
 #import "LauncherNavigationController.h"
 #import "LauncherMenuViewController.h"
 #import "LauncherNewsViewController.h"
-#import "OceanHomeViewController.h"
 #import "LauncherPreferences.h"
 #import "LauncherPreferencesViewController.h"
 #import "LauncherProfilesViewController.h"
@@ -63,7 +62,6 @@
     self.navigationItem.titleView = titleView;
     
     self.options = @[
-        [LauncherMenuCustomItem vcClass:OceanHomeViewController.class],
         [LauncherMenuCustomItem vcClass:LauncherNewsViewController.class],
         [LauncherMenuCustomItem vcClass:LauncherProfilesViewController.class],
         [LauncherMenuCustomItem vcClass:LauncherPreferencesViewController.class],

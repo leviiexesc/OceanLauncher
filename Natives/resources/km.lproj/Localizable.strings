@@ -186,7 +186,7 @@
 "login.warn.title.localmode"="របៀបក្រៅបណ្តាញឥឡូវនេះគឺជា របៀបមូលដ្ឋាន។";
 "preference.detail.allocated_memory"="គ្រប់គ្រងចំនួនអង្គចងចាំដែលត្រូវផ្តល់ឱ្យ Minecraft";
 "preference.detail.allow_microphone"="បើកជម្រើសនេះ លុះត្រាតែអ្នកកំពុងប្រើ voice chat mod។ ជម្រើសបិទសំឡេងនឹងត្រូវបានមិនអើពើ ហើយគុណភាពសំឡេងពីកម្មវិធីផ្សេងទៀតនឹងរងផលប៉ះពាល់។";
-"preference.detail.appicon"="អនុញ្ញាតឱ្យអ្នកជ្រើសរើសរវាងរូបតំណាងអេក្រង់ដើមផ្សេងៗគ្នាសម្រាប់ Zenith Launcher។";
+"preference.detail.appicon"="អនុញ្ញាតឱ្យអ្នកជ្រើសរើសរវាងរូបតំណាងអេក្រង់ដើមផ្សេងៗគ្នាសម្រាប់ Ocean Launcher។";
 "preference.detail.auto_ram"="បើកដំណើរការកម្មវិធីកែសម្រួល RAM ស្វ័យប្រវត្តិ";
 "preference.detail.button_scale"="ពង្រីកពួកវាប្រសិនបើប៊ូតុងតូចពេក ជាធម្មតាត្រូវការសម្រាប់អ្នកប្រើប្រាស់ iPad។";
 "preference.detail.check_sha"="ជម្រើសនេះបង្ខំឱ្យកម្មវិធីបើកដំណើរការពិនិត្យមើល hash ឯកសារប្រសិនបើវាមាន។ ការពារការទាញយកដែលខូច។";
@@ -249,7 +249,7 @@
 "preference.title.appicon"="កំណត់រូបតំណាងកម្មវិធី";
 "preference.title.appicon-dark"="Zenith Launcher ងងឹត";
 "preference.title.appicon-default"="Zenith Launcher ភ្លឺ";
-"preference.title.appicon-development"="Penciled Development";
+"preference.title.appicon-development"="Ocean Launcher សម្រាប់អភិវឌ្ឍន៍";
 "preference.title.auto_ram"="RAM ស្វ័យប្រវត្តិ";
 "preference.title.button_scale"="ទំហំប៊ូតុងលើអេក្រង់ (%)";
 "preference.title.check_sha"="ពិនិត្យឯកសារបន្ទាប់ពីទាញយក";
