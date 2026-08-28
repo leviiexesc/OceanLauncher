@@ -123,19 +123,11 @@
               @"requestReload": @YES,
               @"showConfirmPrompt": @YES,
               @"destructive": @YES,
-                            @"action": ^void(){
-                                    loadPreferences(YES);
-                                    [self.tableView reloadData];
-                            }
-                        },
-                        @{ @"key": @"project_repository",
-                            @"icon": @"link",
-                            @"type": self.typeButton,
-                            @"action": ^void(){
-                                    NSURL *repositoryURL = [NSURL URLWithString:@"https://github.com/leviiexesc/OceanLauncher"];
-                                    [UIApplication.sharedApplication openURL:repositoryURL options:@{} completionHandler:nil];
-                            }
-                        },
+              @"action": ^void(){
+                  loadPreferences(YES);
+                  [self.tableView reloadData];
+              }
+            },
             @{@"key": @"erase_demo_data",
               @"icon": @"trash",
               @"type": self.typeButton,
@@ -583,7 +575,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 0) { // Add to general section
-        return [NSString stringWithFormat:@"Ocean Launcher %@-%s\n%@ on %@",
+        return [NSString stringWithFormat:@"Zenith Launcher %@-%s\n%@ on %@",
             NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"],
             CONFIG_TYPE,
             UIDevice.currentDevice.completeOSVersion, [HostManager GetModelName]];

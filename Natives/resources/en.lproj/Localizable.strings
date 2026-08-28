@@ -158,7 +158,6 @@
 "preference.title.appicon-default" = "Familiar Amethyst light";
 "preference.title.appicon-dark" = "Familiar Amethyst dark";
 "preference.title.appicon-development" = "Penciled Development";
-"preference.title.project_repository" = "Ocean Launcher on GitHub";
 "preference.title.hidden_sidebar" = "Hide main menu sidebar by default";
 "preference.detail.hidden_sidebar" = "Allows you to hide the sidebar on the main menu by default and when rotating.";
 
