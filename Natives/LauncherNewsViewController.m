@@ -27,7 +27,6 @@
     background.startPoint = CGPointMake(0.5, 0);
     background.endPoint = CGPointMake(0.5, 1);
     background.frame = self.view.bounds;
-    background.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
     [self.view.layer insertSublayer:background atIndex:0];
 
     UIScrollView *scrollView = [UIScrollView new];
