@@ -21,6 +21,8 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>Ocean Launcher</string>
+	<key>ProjectRepositoryURL</key>
+	<string>https://github.com/leviiexesc/OceanLauncher</string>
 	<key>CFBundleExecutable</key>
 	<string>AngelAuraAmethyst</string>
 	<key>CFBundleIcons</key>
