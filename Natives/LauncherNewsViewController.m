@@ -1,15 +1,10 @@
-#import <WebKit/WebKit.h>
-#import "LauncherMenuViewController.h"
 #import "LauncherNewsViewController.h"
-#import "LauncherPreferences.h"
 #import "utils.h"
 
-@interface LauncherNewsViewController()<WKNavigationDelegate>
+@interface LauncherNewsViewController ()
 @end
 
 @implementation LauncherNewsViewController
-WKWebView *webView;
-UIEdgeInsets insets;
 
 - (id)init {
     self = [super init];
@@ -21,149 +16,101 @@ UIEdgeInsets insets;
     return @"MenuNews";
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    UIBarButtonItem *feedback = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"square.and.pencil"]
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:@selector(showFeedbackForm)];
-    UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                                                target:self
-                                                                                action:@selector(refreshNews)];
-    self.navigationItem.rightBarButtonItems = @[[sidebarViewController drawAccountButton], feedback, refresh];
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    CGSize size = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
-    insets = UIApplication.sharedApplication.windows.firstObject.safeAreaInsets;
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://wiki.angelauramc.dev/patchnotes/changelogs/IOS.html"]];
-
-    WKWebViewConfiguration *webConfig = [[WKWebViewConfiguration alloc] init];
-    webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:webConfig];
-    webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    webView.translatesAutoresizingMaskIntoConstraints = NO;
-    webView.navigationDelegate = self;
-    webView.opaque = NO;
-    [self adjustWebViewForSize:size];
-    webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    NSString *javascript = @"var meta = document.createElement('meta');meta.setAttribute('name', 'viewport');meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');document.getElementsByTagName('head')[0].appendChild(meta);";
-    WKUserScript *nozoom = [[WKUserScript alloc] initWithSource:javascript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
-    [webView.configuration.userContentController addUserScript:nozoom];
-    [webView.scrollView setShowsHorizontalScrollIndicator:NO];
-    [webView loadRequest:request];
-    [self.view addSubview:webView];
-
-    UIBarButtonItem *feedback = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"square.and.pencil"]
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:@selector(showFeedbackForm)];
-    UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                                                target:self
-                                                                                action:@selector(refreshNews)];
-    self.navigationItem.rightBarButtonItems = @[feedback, refresh];
-
-    if(!isJailbroken && getPrefBool(@"warnings.limited_ram_warn") && (roundf(NSProcessInfo.processInfo.physicalMemory / 0x1000000) < 3900)) {
-        // "This device has a limited amount of memory available."
-        [self showWarningAlert:@"limited_ram" hasPreference:YES exitWhenCompleted:NO];
-    }
-
+    self.view.backgroundColor = [UIColor colorWithRed:0.025 green:0.055 blue:0.09 alpha:1.0];
     self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    self.navigationItem.rightBarButtonItem = [sidebarViewController drawAccountButton];
-    self.navigationItem.leftItemsSupplementBackButton = true;
+
+    CAGradientLayer *background = [CAGradientLayer layer];
+    background.colors = @[(id)[UIColor colorWithRed:0.02 green:0.12 blue:0.20 alpha:1].CGColor,
+                          (id)[UIColor colorWithRed:0.16 green:0.55 blue:0.78 alpha:1].CGColor];
+    background.startPoint = CGPointMake(0.5, 0);
+    background.endPoint = CGPointMake(0.5, 1);
+    background.frame = self.view.bounds;
+    background.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+    [self.view.layer insertSublayer:background atIndex:0];
+
+    UIScrollView *scrollView = [UIScrollView new];
+    scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:scrollView];
+    UIStackView *stack = [[UIStackView alloc] init];
+    stack.axis = UILayoutConstraintAxisVertical;
+    stack.spacing = 20;
+    stack.translatesAutoresizingMaskIntoConstraints = NO;
+    [scrollView addSubview:stack];
+
+    UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppLogo-Vector"]];
+    logo.contentMode = UIViewContentModeScaleAspectFit;
+    [logo.heightAnchor constraintEqualToConstant:130].active = YES;
+    [stack addArrangedSubview:logo];
+
+    UILabel *welcome = [self label:localize(@"news.welcome", nil) size:22 weight:UIFontWeightBold];
+    welcome.textAlignment = NSTextAlignmentCenter;
+    [stack addArrangedSubview:welcome];
+
+    UIStackView *links = [[UIStackView alloc] init];
+    links.axis = UILayoutConstraintAxisHorizontal;
+    links.spacing = 12;
+    links.distribution = UIStackViewDistributionFillEqually;
+    [links addArrangedSubview:[self pill:localize(@"news.discord", nil)]];
+    [links addArrangedSubview:[self pill:localize(@"news.downloads", nil)]];
+    [stack addArrangedSubview:links];
+
+    UIView *socialPanel = [UIView new];
+    socialPanel.backgroundColor = [UIColor colorWithWhite:1 alpha:0.10];
+    socialPanel.layer.cornerRadius = 16;
+    UIStackView *socials = [[UIStackView alloc] init];
+    socials.axis = UILayoutConstraintAxisHorizontal;
+    socials.distribution = UIStackViewDistributionFillEqually;
+    socials.translatesAutoresizingMaskIntoConstraints = NO;
+    [socialPanel addSubview:socials];
+    [NSLayoutConstraint activateConstraints:@[
+        [socials.topAnchor constraintEqualToAnchor:socialPanel.topAnchor constant:16],
+        [socials.leadingAnchor constraintEqualToAnchor:socialPanel.leadingAnchor constant:8],
+        [socials.trailingAnchor constraintEqualToAnchor:socialPanel.trailingAnchor constant:-8],
+        [socials.bottomAnchor constraintEqualToAnchor:socialPanel.bottomAnchor constant:-16]
+    ]];
+    [socials addArrangedSubview:[self label:localize(@"news.youtube", nil) size:14 weight:UIFontWeightRegular]];
+    [socials addArrangedSubview:[self label:localize(@"news.facebook", nil) size:14 weight:UIFontWeightRegular]];
+    [socials addArrangedSubview:[self label:localize(@"news.tiktok", nil) size:14 weight:UIFontWeightRegular]];
+    for (UILabel *label in socials.arrangedSubviews) label.textAlignment = NSTextAlignmentCenter;
+    [stack addArrangedSubview:socialPanel];
+
+    UILabel *credit = [self label:localize(@"news.developed_by", nil) size:14 weight:UIFontWeightRegular];
+    credit.textAlignment = NSTextAlignmentCenter;
+    [stack addArrangedSubview:credit];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [scrollView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
+        [scrollView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [scrollView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [scrollView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+        [stack.topAnchor constraintEqualToAnchor:scrollView.contentLayoutGuide.topAnchor constant:28],
+        [stack.leadingAnchor constraintEqualToAnchor:scrollView.contentLayoutGuide.leadingAnchor constant:24],
+        [stack.trailingAnchor constraintEqualToAnchor:scrollView.contentLayoutGuide.trailingAnchor constant:-24],
+        [stack.bottomAnchor constraintEqualToAnchor:scrollView.contentLayoutGuide.bottomAnchor constant:-28],
+        [stack.widthAnchor constraintEqualToAnchor:scrollView.frameLayoutGuide.widthAnchor constant:-48]
+    ]];
 }
 
-- (void)refreshNews {
-    [webView reload];
+- (UILabel *)label:(NSString *)text size:(CGFloat)size weight:(UIFontWeight)weight {
+    UILabel *label = [UILabel new];
+    label.text = text;
+    label.textColor = UIColor.whiteColor;
+    label.font = [UIFont systemFontOfSize:size weight:weight];
+    label.numberOfLines = 0;
+    return label;
 }
 
-- (void)showFeedbackForm {
-    UIAlertController *form = [UIAlertController alertControllerWithTitle:@"Send feedback"
-                                                                       message:@"Help improve Ocean Launcher"
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-    [form addTextFieldWithConfigurationHandler:^(UITextField *field) {
-        field.placeholder = @"What should we improve?";
-        field.clearButtonMode = UITextFieldViewModeWhileEditing;
-    }];
-    [form addAction:[UIAlertAction actionWithTitle:localize(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [form addAction:[UIAlertAction actionWithTitle:@"Share" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSString *feedback = form.textFields.firstObject.text;
-        if (feedback.length == 0) return;
-        UIActivityViewController *share = [[UIActivityViewController alloc] initWithActivityItems:@[feedback] applicationActivities:nil];
-        share.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
-        [self presentViewController:share animated:YES completion:nil];
-    }]];
-    [self presentViewController:form animated:YES completion:nil];
-}
-
--(void)showWarningAlert:(NSString *)key hasPreference:(BOOL)isPreferenced exitWhenCompleted:(BOOL)shouldExit {
-    UIAlertController *warning = [UIAlertController
-                                      alertControllerWithTitle:localize([NSString stringWithFormat:@"login.warn.title.%@", key], nil)
-                                      message:localize([NSString stringWithFormat:@"login.warn.message.%@", key], nil)
-                                      preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *action;
-    if(isPreferenced) {
-        action = [UIAlertAction actionWithTitle:localize(@"OK", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-            setPrefBool([NSString stringWithFormat:@"warnings.%@_warn", key], NO);
-        }];
-    } else if(shouldExit) {
-        action = [UIAlertAction actionWithTitle:localize(@"OK", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-            [UIApplication.sharedApplication performSelector:@selector(suspend)];
-            usleep(100*1000);
-            exit(0);
-        }];
-    } else {
-        action = [UIAlertAction actionWithTitle:localize(@"OK", nil) style:UIAlertActionStyleCancel handler:nil];
-    }
-    warning.popoverPresentationController.sourceView = self.view;
-    warning.popoverPresentationController.sourceRect = self.view.bounds;
-    [warning addAction:action];
-    [self presentViewController:warning animated:YES completion:nil];
-}
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (scrollView.contentOffset.x > 0)
-        scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y);
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    [self adjustWebViewForSize:size];
-}
-
-- (void)adjustWebViewForSize:(CGSize)size {
-    BOOL isPortrait = size.height > size.width;
-    if (isPortrait) {
-        webView.scrollView.contentInset = UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height + insets.top, 0, self.navigationController.navigationBar.frame.size.height + insets.bottom, 0);
-    } else {
-        webView.scrollView.contentInset = UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height, 0, self.navigationController.navigationBar.frame.size.height, 0);
-    }
-}
-
-- (void)webView:(WKWebView *)webView 
-decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction 
-decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-     if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
-        openLink(self, navigationAction.request.URL);
-        decisionHandler(WKNavigationActionPolicyCancel);
-        return;
-    }
-    decisionHandler(WKNavigationActionPolicyAllow);
-}
-
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    NSLog(@"[News] Could not load changelog: %@", error.localizedDescription);
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"News unavailable"
-                                                                       message:@"The live changelog could not be loaded. Check your connection and try refresh."
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:localize(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
+- (UIButton *)pill:(NSString *)title {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    [button setTitle:title forState:UIControlStateNormal];
+    button.tintColor = UIColor.whiteColor;
+    button.backgroundColor = [UIColor colorWithRed:0.04 green:0.62 blue:0.86 alpha:1];
+    button.layer.cornerRadius = 16;
+    button.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
+    [button.heightAnchor constraintEqualToConstant:42].active = YES;
+    return button;
 }
 
 @end

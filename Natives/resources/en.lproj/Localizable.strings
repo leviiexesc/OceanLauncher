@@ -130,6 +130,13 @@
 "News" = "News";
 "Profiles" = "Profiles";
 "Settings" = "Settings";
+"news.welcome" = "Welcome to My Ocean Launcher";
+"news.discord" = "Discord Server";
+"news.downloads" = "Downloads";
+"news.youtube" = "YouTube";
+"news.facebook" = "Facebook";
+"news.tiktok" = "TikTok";
+"news.developed_by" = "Developed by AhRoth";
 
 "preference.section.general" = "General Settings";
 "preference.section.video" = "Video and Audio Settings";
