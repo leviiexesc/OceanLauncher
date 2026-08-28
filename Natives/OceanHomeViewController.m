@@ -4,6 +4,7 @@
 #import "LauncherNewsViewController.h"
 #import "OceanVersionsViewController.h"
 #import "PLProfiles.h"
+#import "utils.h"
 
 @interface OceanHomeViewController ()
 @property(nonatomic) CAGradientLayer *backgroundLayer;
