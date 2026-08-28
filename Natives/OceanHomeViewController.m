@@ -13,7 +13,7 @@
 
 - (instancetype)init {
     self = [super init];
-    if (self) self.title = @"Home";
+    if (self) self.title = localize(@"Home", nil);
     return self;
 }
 
@@ -43,13 +43,13 @@
     [scrollView addSubview:stack];
 
     UILabel *brand = [UILabel new];
-    brand.text = @"OCEAN LAUNCHER";
+    brand.text = localize(@"home.brand", nil);
     brand.textColor = [UIColor colorWithRed:0.38 green:0.88 blue:1 alpha:1];
     brand.font = [UIFont systemFontOfSize:13 weight:UIFontWeightBold];
     [stack addArrangedSubview:brand];
 
     UILabel *greeting = [UILabel new];
-    greeting.text = @"Ready to enter your world?";
+    greeting.text = localize(@"home.greeting", nil);
     greeting.textColor = UIColor.whiteColor;
     greeting.font = [UIFont systemFontOfSize:30 weight:UIFontWeightBold];
     greeting.numberOfLines = 0;
@@ -68,12 +68,12 @@
         [profileStack.bottomAnchor constraintEqualToAnchor:profileCard.bottomAnchor constant:-20]
     ]];
     UILabel *profileTitle = [UILabel new];
-    profileTitle.text = @"ACTIVE PROFILE";
+    profileTitle.text = localize(@"home.active_profile", nil);
     profileTitle.textColor = [UIColor colorWithWhite:1 alpha:.55];
     profileTitle.font = [UIFont systemFontOfSize:11 weight:UIFontWeightSemibold];
     [profileStack addArrangedSubview:profileTitle];
     UILabel *profileName = [UILabel new];
-    profileName.text = PLProfiles.current.selectedProfileName ?: @"Default profile";
+    profileName.text = PLProfiles.current.selectedProfileName ?: localize(@"home.default_profile", nil);
     profileName.textColor = UIColor.whiteColor;
     profileName.font = [UIFont systemFontOfSize:22 weight:UIFontWeightSemibold];
     [profileStack addArrangedSubview:profileName];
@@ -84,7 +84,7 @@
     [profileStack addArrangedSubview:version];
     [stack addArrangedSubview:profileCard];
 
-    UIButton *play = [self actionButton:@"PLAY" symbol:@"play.fill"];
+    UIButton *play = [self actionButton:localize(@"Play", nil) symbol:@"play.fill"];
     [play addTarget:self action:@selector(play:) forControlEvents:UIControlEventPrimaryActionTriggered];
     [stack addArrangedSubview:play];
 
@@ -92,31 +92,10 @@
     quickActions.axis = UILayoutConstraintAxisHorizontal;
     quickActions.spacing = 10;
     quickActions.distribution = UIStackViewDistributionFillEqually;
-    [quickActions addArrangedSubview:[self navigationButton:@"Versions" symbol:@"square.stack.3d.up.fill" action:@selector(showVersions)]];
-    [quickActions addArrangedSubview:[self navigationButton:@"Profiles" symbol:@"person.2.fill" action:@selector(showProfiles)]];
-    [quickActions addArrangedSubview:[self navigationButton:@"Settings" symbol:@"slider.horizontal.3" action:@selector(showSettings)]];
+    [quickActions addArrangedSubview:[self navigationButton:localize(@"Versions", nil) symbol:@"square.stack.3d.up.fill" action:@selector(showVersions)]];
+    [quickActions addArrangedSubview:[self navigationButton:localize(@"Profiles", nil) symbol:@"person.2.fill" action:@selector(showProfiles)]];
+    [quickActions addArrangedSubview:[self navigationButton:localize(@"Settings", nil) symbol:@"slider.horizontal.3" action:@selector(showSettings)]];
     [stack addArrangedSubview:quickActions];
-
-    UILabel *updates = [UILabel new];
-    updates.text = @"LATEST UPDATES";
-    updates.textColor = [UIColor colorWithWhite:1 alpha:.55];
-    updates.font = [UIFont systemFontOfSize:11 weight:UIFontWeightSemibold];
-    [stack addArrangedSubview:updates];
-    UIView *newsCard = [self cardView];
-    UILabel *news = [UILabel new];
-    news.text = @"Your worlds, Java Edition\nConnected to the existing metadata and download services.";
-    news.textColor = [UIColor colorWithWhite:1 alpha:.8];
-    news.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
-    news.numberOfLines = 0;
-    news.translatesAutoresizingMaskIntoConstraints = NO;
-    [newsCard addSubview:news];
-    [NSLayoutConstraint activateConstraints:@[
-        [news.topAnchor constraintEqualToAnchor:newsCard.topAnchor constant:18],
-        [news.leadingAnchor constraintEqualToAnchor:newsCard.leadingAnchor constant:18],
-        [news.trailingAnchor constraintEqualToAnchor:newsCard.trailingAnchor constant:-18],
-        [news.bottomAnchor constraintEqualToAnchor:newsCard.bottomAnchor constant:-18]
-    ]];
-    [stack addArrangedSubview:newsCard];
 
     [NSLayoutConstraint activateConstraints:@[
         [scrollView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
