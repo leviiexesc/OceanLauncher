@@ -38,7 +38,10 @@
     stack.translatesAutoresizingMaskIntoConstraints = NO;
     [scrollView addSubview:stack];
 
-    UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppLogo-Vector"]];
+    UIImage *logoImage = [UIImage imageNamed:@"AppLogo-Vector"];
+    if (!logoImage) logoImage = [UIImage imageNamed:@"AppLogo"];
+    if (!logoImage) logoImage = [UIImage imageNamed:@"AppIcon-Light"];
+    UIImageView *logo = [[UIImageView alloc] initWithImage:logoImage];
     logo.contentMode = UIViewContentModeScaleAspectFit;
     [logo.heightAnchor constraintEqualToConstant:130].active = YES;
     [stack addArrangedSubview:logo];
@@ -96,9 +99,17 @@
     UILabel *label = [UILabel new];
     label.text = text;
     label.textColor = UIColor.whiteColor;
-    label.font = [UIFont systemFontOfSize:size weight:weight];
+    label.font = [self fontForText:text size:size weight:weight];
     label.numberOfLines = 0;
     return label;
+}
+
+- (UIFont *)fontForText:(NSString *)text size:(CGFloat)size weight:(UIFontWeight)weight {
+    if ([NSLocale.preferredLanguages.firstObject hasPrefix:@"km"]) {
+        UIFont *khmerFont = [UIFont fontWithName:@"KhmerSangamMN" size:size];
+        if (khmerFont) return khmerFont;
+    }
+    return [UIFont systemFontOfSize:size weight:weight];
 }
 
 - (UIButton *)pill:(NSString *)title {
@@ -107,7 +118,7 @@
     button.tintColor = UIColor.whiteColor;
     button.backgroundColor = [UIColor colorWithRed:0.04 green:0.62 blue:0.86 alpha:1];
     button.layer.cornerRadius = 16;
-    button.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
+    button.titleLabel.font = [self fontForText:title size:14 weight:UIFontWeightSemibold];
     [button.heightAnchor constraintEqualToConstant:42].active = YES;
     return button;
 }
